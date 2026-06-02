@@ -4,9 +4,9 @@ import { IonButton, IonIcon, IonInput, IonNote } from '@ionic/angular/standalone
 import { LoginCredentials } from '../../interfaces/user.interface';
 
 @Component({
-    selector: 'app-login-form',
-    imports: [ReactiveFormsModule, IonButton, IonIcon, IonInput, IonNote],
-    template: `
+  selector: 'app-login-form',
+  imports: [ReactiveFormsModule, IonButton, IonIcon, IonInput, IonNote],
+  template: `
     <form class="space-y-5" [formGroup]="form" (ngSubmit)="submit()">
       <div>
         <ion-input
@@ -36,16 +36,20 @@ import { LoginCredentials } from '../../interfaces/user.interface';
         }
       </div>
 
-      <ion-button class="h-11 w-full" type="submit" expand="block">
-        Iniciar sesion
-      </ion-button>
+      <ion-button class="h-11 w-full" type="submit" expand="block">Iniciar sesion</ion-button>
 
-      <ion-button class="h-11 w-full" type="button" fill="outline" expand="block" (click)="googleLogin.emit()">
+      <ion-button
+        class="h-11 w-full"
+        type="button"
+        fill="outline"
+        expand="block"
+        (click)="googleLogin.emit()"
+      >
         <ion-icon name="logo-google" slot="start" aria-hidden="true" />
         Login con Google
       </ion-button>
     </form>
-  `
+  `,
 })
 export class LoginFormComponent {
   login = output<LoginCredentials>();

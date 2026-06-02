@@ -3,9 +3,9 @@ import { FormsModule } from '@angular/forms';
 import { IonButton, IonIcon, IonInput } from '@ionic/angular/standalone';
 
 @Component({
-    selector: 'app-comment-form',
-    imports: [FormsModule, IonButton, IonIcon, IonInput],
-    template: `
+  selector: 'app-comment-form',
+  imports: [FormsModule, IonButton, IonIcon, IonInput],
+  template: `
     <form class="grid grid-cols-[1fr_auto] gap-2" (ngSubmit)="submit()">
       <ion-input
         class="rounded-lg border border-slate-200 bg-white px-3"
@@ -19,7 +19,7 @@ import { IonButton, IonIcon, IonInput } from '@ionic/angular/standalone';
         <ion-icon name="chatbubble-outline" slot="icon-only" aria-label="Comentar" />
       </ion-button>
     </form>
-  `
+  `,
 })
 export class CommentFormComponent {
   postId = input.required<string>();

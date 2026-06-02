@@ -8,9 +8,9 @@ import { CreatePostInput } from '../../interfaces/post.interface';
 import { SocialStore } from '../../store/social.store';
 
 @Component({
-    selector: 'app-feed-page',
-    imports: [EmptyStateComponent, PostComposerComponent, PostCardComponent, FeedTemplateComponent],
-    template: `
+  selector: 'app-feed-page',
+  imports: [EmptyStateComponent, PostComposerComponent, PostCardComponent, FeedTemplateComponent],
+  template: `
     <app-feed-template [user]="store.currentUser()" (logout)="logout()">
       <div feed-main class="space-y-5">
         <app-post-composer (createPost)="createPost($event)" />
@@ -54,13 +54,16 @@ import { SocialStore } from '../../store/social.store';
         <section class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
           <h2 class="text-sm font-semibold text-slate-950">SSR</h2>
           <p class="mt-2 text-sm leading-6 text-slate-600">
-            Las rutas <span class="font-medium text-slate-900">/login</span> y
-            <span class="font-medium text-slate-900">/feed</span> renderizan con Angular Universal.
+            Las rutas
+            <span class="font-medium text-slate-900">/login</span>
+            y
+            <span class="font-medium text-slate-900">/feed</span>
+            renderizan con Angular Universal.
           </p>
         </section>
       </div>
     </app-feed-template>
-  `
+  `,
 })
 export class FeedPage {
   readonly store = inject(SocialStore);

@@ -10,8 +10,10 @@ const seededPosts: SocialPost[] = [
     authorId: 'seed-ana',
     authorName: 'Ana Torres',
     authorAvatarColor: '#0f766e',
-    content: 'Probando el nuevo timeline interno. La idea es que cada post se actualice al instante y conserve comentarios entre sesiones.',
-    imageUrl: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80',
+    content:
+      'Probando el nuevo timeline interno. La idea es que cada post se actualice al instante y conserve comentarios entre sesiones.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80',
     createdAt: new Date('2026-05-27T14:35:00.000Z').toISOString(),
     likes: 8,
     saved: false,
@@ -31,7 +33,8 @@ const seededPosts: SocialPost[] = [
     authorId: 'seed-lucia',
     authorName: 'Lucia Perez',
     authorAvatarColor: '#2563eb',
-    content: 'Checklist para el desafio: SSR activo, estado global con signals de Angular, persistencia local y componentes chicos por responsabilidad.',
+    content:
+      'Checklist para el desafio: SSR activo, estado global con signals de Angular, persistencia local y componentes chicos por responsabilidad.',
     createdAt: new Date('2026-05-28T10:15:00.000Z').toISOString(),
     likes: 14,
     saved: true,
@@ -53,11 +56,13 @@ function id(prefix: string): string {
 
 function nameFromEmail(email: string): string {
   const localPart = email.split('@')[0] || 'Usuario';
-  return localPart
-    .split(/[._-]/)
-    .filter(Boolean)
-    .map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
-    .join(' ') || 'Usuario';
+  return (
+    localPart
+      .split(/[._-]/)
+      .filter(Boolean)
+      .map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
+      .join(' ') || 'Usuario'
+  );
 }
 
 function userFromCredentials(credentials: LoginCredentials): AuthUser {
@@ -94,7 +99,9 @@ export class SocialStore {
   readonly posts = computed(() => this.state().posts);
   readonly hydrated = computed(() => this.state().hydrated);
   readonly isAuthenticated = computed(() => this.currentUser() !== null);
-  readonly totalComments = computed(() => this.posts().reduce((total, post) => total + post.comments.length, 0));
+  readonly totalComments = computed(() =>
+    this.posts().reduce((total, post) => total + post.comments.length, 0),
+  );
   readonly totalLikes = computed(() => this.posts().reduce((total, post) => total + post.likes, 0));
 
   hydrate(): void {
@@ -185,14 +192,18 @@ export class SocialStore {
 
   toggleLike(postId: string): void {
     this.patchState({
-      posts: this.posts().map((post) => post.id === postId ? { ...post, likes: post.likes + 1 } : post),
+      posts: this.posts().map((post) =>
+        post.id === postId ? { ...post, likes: post.likes + 1 } : post,
+      ),
     });
     this.persist();
   }
 
   toggleSaved(postId: string): void {
     this.patchState({
-      posts: this.posts().map((post) => post.id === postId ? { ...post, saved: !post.saved } : post),
+      posts: this.posts().map((post) =>
+        post.id === postId ? { ...post, saved: !post.saved } : post,
+      ),
     });
     this.persist();
   }

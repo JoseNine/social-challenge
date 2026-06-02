@@ -31,11 +31,14 @@ export class PersistenceService {
       return;
     }
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      currentUser: state.currentUser,
-      posts: state.posts,
-      hydrated: true,
-    }));
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        currentUser: state.currentUser,
+        posts: state.posts,
+        hydrated: true,
+      }),
+    );
   }
 
   clear(): void {

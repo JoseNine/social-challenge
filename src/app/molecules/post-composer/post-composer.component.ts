@@ -4,9 +4,9 @@ import { IonButton, IonIcon, IonInput, IonTextarea } from '@ionic/angular/standa
 import { CreatePostInput } from '../../interfaces/post.interface';
 
 @Component({
-    selector: 'app-post-composer',
-    imports: [FormsModule, IonButton, IonIcon, IonInput, IonTextarea],
-    template: `
+  selector: 'app-post-composer',
+  imports: [FormsModule, IonButton, IonIcon, IonInput, IonTextarea],
+  template: `
     <form class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm" (ngSubmit)="submit()">
       <ion-textarea
         class="min-h-28 rounded-lg border border-slate-200 px-3"
@@ -33,7 +33,7 @@ import { CreatePostInput } from '../../interfaces/post.interface';
         </ion-button>
       </div>
     </form>
-  `
+  `,
 })
 export class PostComposerComponent {
   createPost = output<CreatePostInput>();

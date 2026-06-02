@@ -14,10 +14,10 @@ import {
 import { SocialStore } from './store/social.store';
 
 @Component({
-    selector: 'app-root',
-    imports: [IonApp, IonRouterOutlet],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.css'
+  selector: 'app-root',
+  imports: [IonApp, IonRouterOutlet],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
   private readonly store = inject(SocialStore);
