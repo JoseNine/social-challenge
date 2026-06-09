@@ -6,7 +6,6 @@ Aplicacion web tipo red social basica para el challenge Frontend Angular.
 
 - Angular 20 LTS con Standalone Components.
 - Angular Universal SSR.
-- Ionic Angular 8.
 - Tailwind CSS 4.
 - Signals nativas de Angular para estado global.
 - Persistencia local con `localStorage`, protegida para SSR.
@@ -30,7 +29,7 @@ Aplicacion web tipo red social basica para el challenge Frontend Angular.
 npm install --legacy-peer-deps
 ```
 
-Se usa `--legacy-peer-deps` para conservar Tailwind CSS 4 junto con el stack de Angular/Ionic del challenge cuando npm evalua peers opcionales o transitivos. La app configura Tailwind 4 mediante `@tailwindcss/postcss`.
+Se usa `--legacy-peer-deps` para evitar conflictos de peers opcionales o transitivos durante la instalacion. La app configura Tailwind 4 mediante `@tailwindcss/postcss`.
 
 ## Desarrollo CSR
 
@@ -63,6 +62,29 @@ Luego abrir:
 http://localhost:4000
 ```
 
+## Docker
+
+Construir y ejecutar la imagen:
+
+```bash
+docker build -t social-challenge .
+docker run --rm -p 4000:4000 social-challenge
+```
+
+Tambien se puede iniciar con Docker Compose:
+
+```bash
+docker compose up --build
+```
+
+La aplicacion queda disponible en:
+
+```text
+http://localhost:4000
+```
+
+La imagen usa un build multi-stage con Node 22 Alpine. La etapa final contiene solamente las dependencias de produccion y los artefactos SSR compilados, se ejecuta con un usuario sin privilegios e incluye un health check sobre `/login`.
+
 ## Rutas con SSR
 
 Angular Universal prerenderiza y sirve estas rutas:
@@ -91,7 +113,16 @@ Las interfaces estan centralizadas en `src/app/interfaces`. El servicio de estad
 
 ## Deploy
 
-No se incluyo deploy publico en esta entrega local. La configuracion SSR generada por Angular es compatible con servicios que soporten Node/SSR, como Vercel o Netlify con adaptador adecuado.
+El `Dockerfile` permite desplegar la aplicacion en servicios compatibles con contenedores, como Render, Railway, Fly.io o Google Cloud Run. El contenedor escucha la variable de entorno `PORT`, con `4000` como valor predeterminado.
+
+Para Render:
+
+1. Crear un nuevo Web Service desde el repositorio.
+2. Seleccionar el runtime Docker.
+3. Usar el `Dockerfile` ubicado en la raiz.
+4. Configurar el health check path como `/login`.
+
+Render construye la imagen y asigna automaticamente la variable `PORT`.
 
 ## Documento del challenge
 
