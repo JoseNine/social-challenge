@@ -5,3 +5,8 @@
 [build.environment]
   NODE_VERSION = "22.22.0"
   NPM_FLAGS = "--legacy-peer-deps"
+
+[[redirects]]
+  from = "/"
+  to = "/login"
+  status = 302
