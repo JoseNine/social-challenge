@@ -8,6 +8,8 @@
 
 # Node
 /node_modules
+/.netlify
+/deno.lock
 npm-debug.log
 yarn-error.log
 

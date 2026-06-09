@@ -52,38 +52,16 @@ npm run build
 ## Ejecucion SSR
 
 ```bash
-npm run build
-npm run serve:ssr:social-challenge
+npx netlify dev
 ```
 
 Luego abrir:
 
 ```text
-http://localhost:4000
+http://localhost:8888
 ```
 
-## Docker
-
-Construir y ejecutar la imagen:
-
-```bash
-docker build -t social-challenge .
-docker run --rm -p 4000:4000 social-challenge
-```
-
-Tambien se puede iniciar con Docker Compose:
-
-```bash
-docker compose up --build
-```
-
-La aplicacion queda disponible en:
-
-```text
-http://localhost:4000
-```
-
-La imagen usa un build multi-stage con Node 22 Alpine. La etapa final contiene solamente las dependencias de produccion y los artefactos SSR compilados, se ejecuta con un usuario sin privilegios e incluye un health check sobre `/login`.
+Netlify Dev ejecuta la aplicacion usando la misma integracion Angular SSR utilizada durante el deploy.
 
 ## Rutas con SSR
 
@@ -112,17 +90,6 @@ src/app
 Las interfaces estan centralizadas en `src/app/interfaces`. El servicio de estado principal esta en `src/app/store/social.store.ts`.
 
 ## Deploy
-
-El `Dockerfile` permite desplegar la aplicacion en servicios compatibles con contenedores, como Render, Railway, Fly.io o Google Cloud Run. El contenedor escucha la variable de entorno `PORT`, con `4000` como valor predeterminado.
-
-Para Render:
-
-1. Crear un nuevo Web Service desde el repositorio.
-2. Seleccionar el runtime Docker.
-3. Usar el `Dockerfile` ubicado en la raiz.
-4. Configurar el health check path como `/login`.
-
-Render construye la imagen y asigna automaticamente la variable `PORT`.
 
 Para Netlify:
 
