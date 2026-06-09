@@ -12,23 +12,28 @@ import { SocialStore } from '../../store/social.store';
   imports: [EmptyStateComponent, PostComposerComponent, PostCardComponent, FeedTemplateComponent],
   template: `
     <app-feed-template [user]="store.currentUser()" (logout)="logout()">
-      <div feed-main class="space-y-5">
+      <div feed-main>
         <app-post-composer (createPost)="createPost($event)" />
 
         @if (store.posts().length) {
-          @for (post of store.posts(); track post.id) {
-            <app-post-card
-              [post]="post"
-              (like)="store.toggleLike($event)"
-              (save)="store.toggleSaved($event)"
-              (comment)="store.createComment($event.postId, $event.content)"
-            />
-          }
+          <div class="mt-8 grid gap-8">
+            @for (post of store.posts(); track post.id) {
+              <app-post-card
+                [post]="post"
+                [currentUserId]="store.currentUser()?.id ?? null"
+                (like)="store.toggleLike($event)"
+                (save)="store.toggleSaved($event)"
+                (comment)="store.createComment($event.postId, $event.content)"
+              />
+            }
+          </div>
         } @else {
-          <app-empty-state
-            title="No hay publicaciones"
-            description="Creá el primer post para iniciar el timeline."
-          />
+          <div class="mt-8">
+            <app-empty-state
+              [title]="'No hay publicaciones'"
+              [description]="'Creá el primer post para iniciar el timeline.'"
+            />
+          </div>
         }
       </div>
 
@@ -38,15 +43,21 @@ import { SocialStore } from '../../store/social.store';
           <dl class="mt-4 grid grid-cols-3 gap-2 text-center">
             <div class="rounded-lg bg-slate-50 p-3">
               <dt class="text-xs text-slate-500">Posts</dt>
-              <dd class="mt-1 text-xl font-semibold text-slate-950">{{ store.posts().length }}</dd>
+              <dd class="mt-1 text-xl font-semibold text-slate-950">
+                {{ store.posts().length }}
+              </dd>
             </div>
             <div class="rounded-lg bg-slate-50 p-3">
               <dt class="text-xs text-slate-500">Likes</dt>
-              <dd class="mt-1 text-xl font-semibold text-slate-950">{{ store.totalLikes() }}</dd>
+              <dd class="mt-1 text-xl font-semibold text-slate-950">
+                {{ store.totalLikes() }}
+              </dd>
             </div>
             <div class="rounded-lg bg-slate-50 p-3">
               <dt class="text-xs text-slate-500">Comentarios</dt>
-              <dd class="mt-1 text-xl font-semibold text-slate-950">{{ store.totalComments() }}</dd>
+              <dd class="mt-1 text-xl font-semibold text-slate-950">
+                {{ store.totalComments() }}
+              </dd>
             </div>
           </dl>
         </section>

@@ -1,23 +1,28 @@
 import { Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonButton, IonIcon, IonInput } from '@ionic/angular/standalone';
+import { IconComponent } from '../../atoms/icon/icon.component';
 
 @Component({
   selector: 'app-comment-form',
-  imports: [FormsModule, IonButton, IonIcon, IonInput],
+  imports: [FormsModule, IconComponent],
   template: `
-    <form class="grid grid-cols-[1fr_auto] gap-2" (ngSubmit)="submit()">
-      <ion-input
-        class="rounded-lg border border-slate-200 bg-white px-3"
-        label="Comentario"
-        label-placement="stacked"
-        placeholder="Escribí un comentario"
-        [(ngModel)]="content"
-        [name]="'comment-' + postId()"
-      />
-      <ion-button class="h-12 self-end" type="submit" [disabled]="!content.trim()">
-        <ion-icon name="chatbubble-outline" slot="icon-only" aria-label="Comentar" />
-      </ion-button>
+    <form class="grid grid-cols-[1fr_auto] items-end gap-2" (ngSubmit)="submit()">
+      <label class="block">
+        <span class="mb-1 block text-xs font-medium text-slate-500">Comentario</span>
+        <input
+          class="h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600/20"
+          placeholder="Escribí un comentario"
+          [(ngModel)]="content"
+          [name]="'comment-' + postId()"
+        />
+      </label>
+      <button
+        type="submit"
+        class="grid h-11 w-11 place-items-center rounded-lg bg-teal-700 text-xl text-white transition-colors hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-50"
+        [disabled]="!content.trim()"
+      >
+        <app-icon [name]="'chatbubble-outline'" [ariaLabel]="'Comentar'" />
+      </button>
     </form>
   `,
 })

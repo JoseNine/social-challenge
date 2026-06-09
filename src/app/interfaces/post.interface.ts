@@ -8,7 +8,7 @@ export interface SocialPost {
   content: string;
   imageUrl?: string;
   createdAt: string;
-  likes: number;
+  likedBy: string[];
   saved: boolean;
   comments: SocialComment[];
 }

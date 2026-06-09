@@ -1,13 +1,14 @@
 import { DatePipe } from '@angular/common';
-import { Component, input, output } from '@angular/core';
-import { IonButton, IonIcon } from '@ionic/angular/standalone';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { AvatarComponent } from '../../atoms/avatar/avatar.component';
+import { IconComponent } from '../../atoms/icon/icon.component';
 import { CommentFormComponent } from '../../molecules/comment-form/comment-form.component';
 import { SocialPost } from '../../interfaces/post.interface';
 
 @Component({
   selector: 'app-post-card',
-  imports: [DatePipe, IonButton, IonIcon, AvatarComponent, CommentFormComponent],
+  imports: [DatePipe, IconComponent, AvatarComponent, CommentFormComponent],
+  host: { class: 'block' },
   template: `
     <article class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
       <div class="flex gap-3 p-4">
@@ -28,27 +29,48 @@ import { SocialPost } from '../../interfaces/post.interface';
       </div>
 
       @if (post().imageUrl) {
-        <img
-          class="max-h-[420px] w-full object-cover"
-          [src]="post().imageUrl"
-          alt="Imagen del post"
-          loading="lazy"
-        />
+        <div class="relative aspect-video max-h-[26.25rem] overflow-hidden bg-slate-100">
+          <div
+            class="absolute inset-0 animate-pulse bg-gradient-to-br from-slate-100 to-slate-200 transition-opacity duration-300"
+            [class.opacity-0]="imageLoaded()"
+            aria-hidden="true"
+          ></div>
+          <img
+            class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300"
+            [class.opacity-100]="imageLoaded()"
+            [src]="post().imageUrl"
+            alt="Imagen del post"
+            loading="eager"
+            (load)="imageLoaded.set(true)"
+          />
+        </div>
       }
 
       <div class="flex flex-wrap items-center gap-2 border-y border-slate-100 px-3 py-2">
-        <ion-button fill="clear" size="small" (click)="like.emit(post().id)">
-          <ion-icon name="heart-outline" slot="start" aria-hidden="true" />
-          {{ post().likes }}
-        </ion-button>
-        <ion-button fill="clear" size="small" (click)="save.emit(post().id)">
-          <ion-icon
-            [name]="post().saved ? 'bookmark' : 'bookmark-outline'"
-            slot="start"
-            aria-hidden="true"
-          />
+        <button
+          type="button"
+          class="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors hover:bg-slate-100"
+          [class.text-slate-600]="!likedByMe()"
+          [class.hover:text-slate-900]="!likedByMe()"
+          [class.text-rose-600]="likedByMe()"
+          [class.hover:text-rose-700]="likedByMe()"
+          [attr.aria-pressed]="likedByMe()"
+          (click)="like.emit(post().id)"
+        >
+          <app-icon [name]="likedByMe() ? 'heart' : 'heart-outline'" [ariaHidden]="true" />
+          {{ post().likedBy.length }}
+        </button>
+        <button
+          type="button"
+          class="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors hover:bg-slate-100"
+          [class.text-slate-600]="!post().saved"
+          [class.hover:text-slate-900]="!post().saved"
+          [class.text-teal-700]="post().saved"
+          (click)="save.emit(post().id)"
+        >
+          <app-icon [name]="post().saved ? 'bookmark' : 'bookmark-outline'" [ariaHidden]="true" />
           Guardar
-        </ion-button>
+        </button>
         <span class="ml-auto text-xs text-slate-500">{{ post().comments.length }} comentarios</span>
       </div>
 
@@ -57,7 +79,7 @@ import { SocialPost } from '../../interfaces/post.interface';
           <div class="rounded-lg bg-slate-50 px-3 py-2">
             <div class="flex items-center justify-between gap-2">
               <p class="text-xs font-semibold text-slate-900">{{ comment.authorName }}</p>
-              <time class="text-[11px] text-slate-400" [dateTime]="comment.createdAt">
+              <time class="text-[0.6875rem] text-slate-400" [dateTime]="comment.createdAt">
                 {{ comment.createdAt | date: 'short' }}
               </time>
             </div>
@@ -74,7 +96,14 @@ import { SocialPost } from '../../interfaces/post.interface';
 })
 export class PostCardComponent {
   post = input.required<SocialPost>();
+  currentUserId = input<string | null>(null);
   like = output<string>();
   save = output<string>();
   comment = output<{ postId: string; content: string }>();
+  readonly imageLoaded = signal(false);
+
+  readonly likedByMe = computed(() => {
+    const userId = this.currentUserId();
+    return userId ? this.post().likedBy.includes(userId) : false;
+  });
 }

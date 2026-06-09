@@ -16,7 +16,7 @@ import { Component } from '@angular/core';
         ></div>
         <div class="absolute bottom-0 max-w-xl p-10 text-white">
           <p class="text-sm font-semibold uppercase tracking-wide text-teal-200">
-            Angular 20 LTS + Ionic
+            Angular 20 LTS + Tailwind CSS
           </p>
           <h1 class="mt-3 text-4xl font-bold leading-tight">
             Red social básica con SSR y signals de Angular

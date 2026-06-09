@@ -1,53 +1,58 @@
 import { Component, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonButton, IonIcon, IonInput, IonNote } from '@ionic/angular/standalone';
+import { IconComponent } from '../../atoms/icon/icon.component';
 import { LoginCredentials } from '../../interfaces/user.interface';
 
 @Component({
   selector: 'app-login-form',
-  imports: [ReactiveFormsModule, IonButton, IonIcon, IonInput, IonNote],
+  imports: [ReactiveFormsModule, IconComponent],
   template: `
     <form class="space-y-5" [formGroup]="form" (ngSubmit)="submit()">
       <div>
-        <ion-input
-          class="rounded-lg border border-slate-200 bg-white px-3"
-          label="Email"
-          label-placement="stacked"
-          type="email"
-          autocomplete="email"
-          formControlName="email"
-        />
+        <label class="block">
+          <span class="mb-1 block text-xs font-medium text-slate-500">Email</span>
+          <input
+            class="h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600/20"
+            type="email"
+            autocomplete="email"
+            formControlName="email"
+          />
+        </label>
         @if (emailError()) {
-          <ion-note class="mt-1 block text-xs" color="danger">{{ emailError() }}</ion-note>
+          <p class="mt-1 block text-xs text-rose-600">{{ emailError() }}</p>
         }
       </div>
 
       <div>
-        <ion-input
-          class="rounded-lg border border-slate-200 bg-white px-3"
-          label="Password"
-          label-placement="stacked"
-          type="password"
-          autocomplete="current-password"
-          formControlName="password"
-        />
+        <label class="block">
+          <span class="mb-1 block text-xs font-medium text-slate-500">Password</span>
+          <input
+            class="h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600/20"
+            type="password"
+            autocomplete="current-password"
+            formControlName="password"
+          />
+        </label>
         @if (passwordError()) {
-          <ion-note class="mt-1 block text-xs" color="danger">{{ passwordError() }}</ion-note>
+          <p class="mt-1 block text-xs text-rose-600">{{ passwordError() }}</p>
         }
       </div>
 
-      <ion-button class="h-11 w-full" type="submit" expand="block">Iniciar sesion</ion-button>
+      <button
+        type="submit"
+        class="h-11 w-full rounded-lg bg-teal-700 text-sm font-semibold text-white transition-colors hover:bg-teal-800"
+      >
+        Iniciar sesion
+      </button>
 
-      <ion-button
-        class="h-11 w-full"
+      <button
         type="button"
-        fill="outline"
-        expand="block"
+        class="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-teal-700 text-sm font-semibold text-teal-700 transition-colors hover:bg-teal-50"
         (click)="googleLogin.emit()"
       >
-        <ion-icon name="logo-google" slot="start" aria-hidden="true" />
+        <app-icon [name]="'logo-google'" [ariaHidden]="true" />
         Login con Google
-      </ion-button>
+      </button>
     </form>
   `,
 })
