@@ -124,6 +124,14 @@ Para Render:
 
 Render construye la imagen y asigna automaticamente la variable `PORT`.
 
+Para Netlify:
+
+1. Importar el repositorio desde GitHub.
+2. Usar `npm run build` como build command.
+3. Mantener la configuracion de `netlify.toml`.
+
+Netlify detecta Angular SSR y genera automaticamente la Edge Function. El proyecto incluye `@netlify/angular-runtime` v4 y fija Node 22.22 para cumplir los requisitos del adaptador.
+
 ## Documento del challenge
 
 El PDF original descargado desde el link de Drive esta guardado como:
