@@ -5,10 +5,10 @@
     <title>SocialChallenge</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="app-icon.svg" />
     <script>
       if (window.location.protocol === 'file:') {
-        const sourceFavicon = new URL('../public/favicon.ico', window.location.href).href;
+        const sourceFavicon = new URL('../public/app-icon.svg', window.location.href).href;
         document.querySelector('link[rel~="icon"]').href = sourceFavicon;
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -41,7 +41,7 @@
   <body>
     <app-root>
       <div class="app-loader" role="status" aria-label="Cargando aplicación">
-        <img class="app-loader__logo" src="favicon.ico" alt="" />
+        <img class="app-loader__logo" src="app-icon.svg" alt="" />
       </div>
     </app-root>
   </body>
