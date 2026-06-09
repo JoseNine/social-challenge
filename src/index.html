@@ -6,8 +6,33 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <style>
+      .app-loader {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        background: #f6f7f9;
+      }
+
+      .app-loader__logo {
+        width: 3rem;
+        height: 3rem;
+        animation: app-loader-pulse 1s ease-in-out infinite;
+      }
+
+      @keyframes app-loader-pulse {
+        50% {
+          opacity: 0.55;
+          transform: scale(0.92);
+        }
+      }
+    </style>
   </head>
   <body>
-    <app-root></app-root>
+    <app-root>
+      <div class="app-loader" role="status" aria-label="Cargando aplicación">
+        <img class="app-loader__logo" src="favicon.ico" alt="" />
+      </div>
+    </app-root>
   </body>
 </html>
